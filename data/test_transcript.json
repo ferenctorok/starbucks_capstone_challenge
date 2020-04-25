@@ -1,0 +1,18 @@
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "transaction", "value": {"amount": 0.83}, "time": 0}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer_id": "0b1e1539f2cc45b7b9fa7c272da2e1d7"}, "time": 0}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer_id": "ae264e3637204a6fb9bb56bc8210ddfd"}, "time": 0}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer_id": "4d5c57ea9a6940dd891ad53e9dbe8da0"}, "time": 1}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer viewed", "value": {"offer id": "4d5c57ea9a6940dd891ad53e9dbe8da0"}, "time": 2}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer id": "0b1e1539f2cc45b7b9fa7c272da2e1d7"}, "time": 4}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer viewed", "value": {"offer id": "0b1e1539f2cc45b7b9fa7c272da2e1d7"}, "time": 5}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer id": "5a8bc65990b245e5a138643cd4eb9837"}, "time": 6}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer viewed", "value": {"offer id": "5a8bc65990b245e5a138643cd4eb9837"}, "time": 7}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "transaction", "value": {"amount": 4.3}, "time": 8}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer completed", "value": {"offer id": "4d5c57ea9a6940dd891ad53e9dbe8da0"}, "time": 9}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer_id": "ae264e3637204a6fb9bb56bc8210ddfd"}, "time": 11}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer completed", "value": {"offer id": "ae264e3637204a6fb9bb56bc8210ddfd"}, "time": 13}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer_id": "4d5c57ea9a6940dd891ad53e9dbe8da0"}, "time": 15}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer received", "value": {"offer_id": "ae264e3637204a6fb9bb56bc8210ddfd"}, "time": 20}
+{"person": "78afa995795e4d85b5d9ceeca43f5fef", "event": "offer completed", "value": {"offer id": "0b1e1539f2cc45b7b9fa7c272da2e1d7"}, "time": 243}
+
+
