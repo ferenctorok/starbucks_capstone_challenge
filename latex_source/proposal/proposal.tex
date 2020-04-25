@@ -25,7 +25,7 @@ Of course in real life, Starbucks has a wide variety of products to offer, howev
 
 With the amount of data gathered in recent times and with the advance of Machine Learning techniques and Artificial Intelligence a new era in advertising raises. This is the era of personal advertisement where based on data about costumers one is able to send relevant and only the most relevant promotions and advertisement to them. This stimulates purchasing and hence the company is able to gain larger profit.
 
-\section*{Problem Statement}
+\section*{Problem statement}
 
 The aim of personal advertisement is to send each costumer promotions which are the most probable to make them satisfied. Also it is important not to send them promotions which will most probably not interest them since these might even have a negative effect on the consumption. Also in some situations the people fulfill some promotions without even noticing that they existed. These are also situations to avoid since in this situation the company gave these people some discount although it was not necessary.
 
@@ -75,7 +75,7 @@ The transcript.json file contains timestamped data about transaction and offers 
 	\item time: (numeric) hours after start of test
 \end{itemize}
 
-\section*{Solution Proposal}
+\section*{Solution proposal}
 
 To solve the classification problem of the Problem Statement we propose to use the following solution:
 
@@ -105,16 +105,19 @@ $$Accuracy = \frac{\sum_{i=1}^{N}\mathbb{I}\left(\hat{y}(x) = y(x)\right)}{N}$$
 
 where $\hat{y}(x)$ and $y(x)$ are the predicted and real class respectively and $\mathbb{I}(statement)$ is the indicator function which is 1 if $statement$ is true and 0 otherwise.
 
-\section*{Project Design Outline}
+\section*{Project design outline}
 
 \begin{itemize}
-	\item The data has already been examined. The distributions of the interesting features is checked, some statistics of the data are plotted.
-	\item The features are going to be engineered and the anomalies in the dataset which were discovered during data exploration are cured.
-	\item The data is split into train, validation and test sets
-	\item The models are trained 
-	\item The results of the models are examined and compared.
-	\item Conclusion is derived
+	\item The data has already been examined. The distributions of the interesting features are checked, some statistics of the data are plotted. Most of the features have nice distributions these are only going to be standardized for better performance. There are some features however, which need to be further preprocessed, transformed. Also it was examined, that some outlier data will need to be removed for stable learning. 
+	\item The features are going to be engineered. Some statistical features for every data-point has to be calculated from the dataset. Also the anomalies mentioned in the previous point are going to be cured. This means transforming the not nicely distributed features to acquire normal-like distributions and sorting out the outliers.
+	\item Splitting the data into train, validation and test sets. We are going to use 60-20-20 splitting.
+	\item Training the models. This will probably include the process of finding suitable hyperparameters for the training of the neural network. Different network architectures, step-size parameters, dropout parameters etc are going to be tried.
+	\item Examining and comparing the results of the models. 
+	\item Deriving a conclusion about whether the chosen method was suitable for the task or not and what improvements would be possible.
 \end{itemize}
+
+\section*{References}
+Must thank Starbucks Corporation for the dataset. 
 
 
  
