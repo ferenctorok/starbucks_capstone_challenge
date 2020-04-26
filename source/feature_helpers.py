@@ -32,7 +32,7 @@ def get_total_spent(profile_df, transcript_df, cache_file=None):
             person_mask = (transactions_df.person == person)
             transactions_of_person = transactions_df.amount[person_mask]
             
-            profile_df.total_spent[profile_df.id == person] = transactions_of_person.sum()
+            profile_df.total_spent.loc[profile_df.id == person] = transactions_of_person.sum()
 
             counter += 1
             # printing stats occasionally:
@@ -96,7 +96,7 @@ def encode_gender(profile):
             gender_mask = profile.gender.isna()
         
         # filling up the appropiate places with ones:
-        profile[gender][gender_mask] = 1
+        profile.loc[gender_mask, gender] = 1
         
     # removing the gender column:
     profile = profile.drop(columns='gender')

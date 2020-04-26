@@ -94,9 +94,9 @@ def get_offer_stats(transcript, profile, portfolio):
                 num_not_viewed_completed += 1
         
         # filling up the dataframe of the person:
-        profile.num_viewed[i] = (person_mask & viewed_mask).sum()
-        profile.num_viewed_completed[i] = num_viewed_completed
-        profile.num_not_viewed_completed[i] = num_not_viewed_completed
+        profile.loc[i, 'num_viewed'] = (person_mask & viewed_mask).sum()
+        profile.loc[i, 'num_viewed_completed'] = num_viewed_completed
+        profile.loc[i, 'num_not_viewed_completed'] = num_not_viewed_completed
 
         # printing progress:
         if (i%1000 == 0):
