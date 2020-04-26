@@ -139,7 +139,7 @@ def get_training_data(profile, transcript, portfolio, target_dir='data', target_
         os.mkdir(target_dir)
 
     with open(os.path.join(target_dir, target_file), 'w'):
-        received_offers.to_csv(os.path.join(target_dir, target_file))
+        training_data.to_csv(os.path.join(target_dir, target_file))
         print('training dataset was saved to {}'.format(os.path.join(target_dir, target_file)))  
     
     return training_data
