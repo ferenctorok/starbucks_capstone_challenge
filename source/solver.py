@@ -39,7 +39,7 @@ class NN_Solver(object):
         self.val_acc_history = []
         self.val_loss_history = []
 
-    def train(self, model, train_loader, val_loader, num_epochs=10, log_nth=10):
+    def train(self, model, train_loader, val_loader, num_epochs=10, log_nth=0):
         """
         Train a given model with the provided data.
 
@@ -104,20 +104,19 @@ class NN_Solver(object):
                         # loss calculation:
                         # print('output: {}'.format(outputs))
                         # print('lables: {}'.format(labels))
-                        loss = torch.sum(self.loss_func(outputs, labels))
+                        loss = self.loss_func(outputs, labels)
 
                         # back propagation:
                         loss.backward()
                         optimizer.step()
 
                         # printing the accuracy in every log_nth iteration:
-                        if (iteration_counter % log_nth) == 0:
-                            pred_labels = outputs.argmax(dim=1)
-                            accuracy = np.mean((pred_labels == labels).cpu().numpy())
-                            print('pred_labels: {}'.format(pred_labels))
-                            print('labels: {}'.format(labels))
-                            print('Iteration {}/{} train accuracy : {}'
-                                  .format(iteration_counter, len(train_loader), accuracy))                           
+                        if log_nth != 0:
+                            if (iteration_counter % log_nth) == 0:
+                                pred_labels = outputs.argmax(dim=1)
+                                accuracy = np.mean((pred_labels == labels).cpu().numpy())
+                                print('Iteration {}/{} train accuracy: {}, train_loss: {}'
+                                    .format(iteration_counter, len(train_loader), accuracy, loss.item()))                           
 
                         iteration_counter += 1
 

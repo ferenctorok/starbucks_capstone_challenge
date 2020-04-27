@@ -68,21 +68,28 @@ def get_training_data(profile, transcript, portfolio, target_dir='data', target_
     # offer type cathegory columns:
     offer_columns = ['offer_0', 'offer_1', 'offer_2', 'offer_3', 'offer_4',
                      'offer_5', 'offer_6', 'offer_7', 'offer_8', 'offer_9']
+    
+    offer_type_columns = ['informational', 'bogo', 'discount']
     # label columns:
     label_column = ['label']
     
     # columns of the dataframe:
-    columns = personal_columns + av_consumption_column + offer_stat_columns + offer_columns + label_column
+    columns = personal_columns + av_consumption_column + offer_stat_columns + offer_columns + offer_type_columns + label_column
     
     # creating the dataframe:
     training_data = pd.DataFrame(columns=columns, index=list(range(num_training_points)))
     
-    # creating a dictionary to encode the offer type with one-hot-encoding
+    # creating a dictionary to encode the offers with one-hot-encoding
     offer_ids = portfolio.id.values
     offer_encode_dict = dict(zip(offer_ids, offer_columns))
+
+    # creating a dictionary for the offer type:
+    offer_types = [portfolio.offer_type[portfolio.id == offer_id] for offer_id in offer_ids]
+    offer_types_dict = dict(zip(offer_ids, offer_types))
     
-    # filling up the offer type encoding columns with zeros in advance:
+    # filling up the offer encoding columns with zeros in advance:
     training_data.loc[:, offer_columns] = np.zeros((num_training_points, len(offer_columns))).astype(np.int8)
+    training_data.loc[:, offer_type_columns] = np.zeros((num_training_points, len(offer_type_columns))).astype(np.int8)
     
     # some masks for furhther use later for searching in the transcript data:
     viewed_mask = (transcript.event == 'offer viewed')
@@ -100,7 +107,11 @@ def get_training_data(profile, transcript, portfolio, target_dir='data', target_
         training_data.loc[i, personal_columns] = personal_data.values
         
         # encoding the offer type into one-hot-encoding:
-        offer_type = offer_encode_dict[offer_id]
+        offer_encoded = offer_encode_dict[offer_id]
+        training_data.loc[i, offer_encoded] = 1
+
+        # getting the offer type:
+        offer_type = offer_types_dict[offer_id]
         training_data.loc[i, offer_type] = 1
         
         # getting all transcript data of this person until this moment:

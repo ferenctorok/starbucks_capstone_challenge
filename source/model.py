@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 
 class Linear_NN(nn.Module):
-    def __init__(self, input_dim=26, hidden_dims=[128, 128, 64], output_dim=4, dropout=0.2):
+    def __init__(self, input_dim=26, hidden_dims=[128, 128, 64], output_dim=4, dropout=0.2, activation='relu'):
         """Initializing a linear feed-forward neural network. 
         The linear layers are stored in a ModuleList for dynamical callability. (Number of hidden 
         layers can be set on demand)
@@ -26,6 +26,12 @@ class Linear_NN(nn.Module):
         # adding the output layer:
         self.output_layer = nn.Linear(in_features=hidden_dims[-1], out_features=output_dim, bias=True)
 
+        # nonlinearity:
+        if activation == 'relu':
+            self.act = nn.ReLU()
+        elif activation == 'leaky_relu':
+            self.act = nn.LeakyReLU()
+
         # adding dropout:
         self.dropout = nn.Dropout(p=dropout)
 
@@ -46,10 +52,10 @@ class Linear_NN(nn.Module):
         # hidden layers:
         for layer in self.hidden_layers:
             x = layer(self.dropout(x))
-            x = F.relu(x)
+            x = self.act(x)
         
         # output layer:
         x = self.output_layer(self.dropout(x))
-        out = F.softmax(x)
+        out = F.softmax(x, dim=1)
 
         return out
