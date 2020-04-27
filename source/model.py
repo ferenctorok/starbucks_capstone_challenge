@@ -14,14 +14,14 @@ class Linear_NN(nn.Module):
         super().__init__()
 
         # creating a ModuleList for the linear layers:
-        self.layers = nn.ModuleList()
+        self.hidden_layers = nn.ModuleList()
 
         # hidden layers:
         for i, hidden_dim in enumerate(hidden_dims):
             if i == 0:
-                self.layers.append(nn.Linear(in_features=input_dim, out_features=hidden_dim, bias=True))
+                self.hidden_layers.append(nn.Linear(in_features=input_dim, out_features=hidden_dim, bias=True))
             else:
-                self.layers.append(nn.Linear(in_features=hidden_dims[i-1], out_features=hidden_dim, bias=True))
+                self.hidden_layers.append(nn.Linear(in_features=hidden_dims[i-1], out_features=hidden_dim, bias=True))
 
         # adding the output layer:
         self.output_layer = nn.Linear(in_features=hidden_dims[-1], out_features=output_dim, bias=True)
@@ -29,11 +29,22 @@ class Linear_NN(nn.Module):
         # adding dropout:
         self.dropout = nn.Dropout(p=dropout)
 
+        # initializing layer weights and biases:
+        for i, layer in enumerate(self.hidden_layers):
+            nn.init.xavier_uniform_(layer.weight)
+            nn.init.zeros_(layer.bias)
+
+
+        # initializing the output layer:
+        nn.init.xavier_uniform_(self.output_layer.weight)
+        nn.init.zeros_(self.output_layer.bias)
+        
+
     def forward(self, x):
         """forward method of the neural network."""
 
         # hidden layers:
-        for layer in self.layers:
+        for layer in self.hidden_layers:
             x = layer(self.dropout(x))
             x = F.relu(x)
         
