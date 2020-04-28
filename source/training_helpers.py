@@ -15,3 +15,8 @@ def load_training_data(data_dir='data', data_file='training_data_standardized.cs
         print("Unable to read file")
 
     return training_data_df
+
+
+def load_saved_model(model_file):
+    """Loading trained pytorch model from saved state dictionary."""
+    

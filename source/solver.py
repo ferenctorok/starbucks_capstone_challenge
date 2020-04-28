@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import time
 import copy
-import matplotlib.pyplot as plt
+import os
 
 
 class NN_Solver(object):
@@ -39,7 +39,7 @@ class NN_Solver(object):
         self.val_acc_history = []
         self.val_loss_history = []
 
-    def train(self, model, train_loader, val_loader, num_epochs=10, log_nth=0):
+    def train(self, model, train_loader, val_loader, num_epochs=10, log_nth=0, saving_path=None):
         """
         Train a given model with the provided data.
 
@@ -87,6 +87,9 @@ class NN_Solver(object):
 
                     iter_in_epoch = 0
 
+                    epoch_loss = 0
+                    epoch_acc = 0
+                    data_size = 0
                     for batch in train_loader:
                         inputs, labels = batch
                         iter_in_epoch += 1
@@ -110,26 +113,34 @@ class NN_Solver(object):
                         loss.backward()
                         optimizer.step()
 
+                        # logging the loss and the accuracy:
+                        batch_data_size = labels.shape[0]
+                        pred_labels = outputs.argmax(dim=1)
+                        accuracy = np.mean((pred_labels == labels).cpu().numpy())
+
+                        epoch_loss += loss.item()
+                        epoch_acc += accuracy * batch_data_size     # for weighing average of the accuracy
+                        data_size += batch_data_size
+
                         # printing the accuracy in every log_nth iteration:
                         if log_nth != 0:
                             if (iteration_counter % log_nth) == 0:
-                                pred_labels = outputs.argmax(dim=1)
-                                accuracy = np.mean((pred_labels == labels).cpu().numpy())
                                 print('Iteration {}/{} train accuracy: {}, train_loss: {}'
                                     .format(iteration_counter, len(train_loader), accuracy, loss.item()))                           
 
                         iteration_counter += 1
 
                     # saving the training loss and accuracy in every epoch:
-                    self.train_loss_history.append(loss.item())
-                    pred_labels = outputs.argmax(dim=1)
-                    self.train_acc_history.append(np.mean((pred_labels == labels).cpu().numpy()))
+                    self.train_loss_history.append(epoch_loss / data_size)
+                    self.train_acc_history.append(epoch_acc / data_size)
 
                 else:
                     model.eval()  # Set model to evaluate mode
 
-                    val_loss, val_acc = 0, 0
-                    for inputs, labels in val_loader:
+                    epoch_loss, epoch_acc = 0, 0
+                    data_size = 0
+                    for batch in val_loader:
+                        inputs, labels = batch
                         #############################
                         #inputs = inputs.to(device)
                         #labels = labels.to(device)
@@ -138,32 +149,40 @@ class NN_Solver(object):
                         outputs = model(inputs)
 
                         # loss calculation:
-                        loss = torch.sum(self.loss_func(outputs, labels))
-                        val_loss += loss.item()
+                        loss = self.loss_func(outputs, labels)
 
-                        # accuracy calculation:
+                        # logging the loss and the accuracy:
+                        batch_data_size = labels.shape[0]
                         pred_labels = outputs.argmax(dim=1)
-                        val_acc += np.mean((pred_labels == labels).cpu().numpy())
+                        accuracy = np.mean((pred_labels == labels).cpu().numpy())
 
-                    val_loss /= len(val_loader)
-                    val_acc /= len(val_loader)
+                        epoch_loss += loss.item()
+                        epoch_acc += accuracy * batch_data_size     # for weighing average of the accuracy
+                        data_size += batch_data_size
 
-                    self.val_loss_history.append(val_loss)
-                    self.val_acc_history.append(val_acc)
+                    self.val_loss_history.append(epoch_loss / data_size)
+                    self.val_acc_history.append(epoch_acc / data_size)
 
             if self.scheduler:
                 lr_scheduler.step()
 
             # printing the loss and accuracy info for the epoch:
             print('EPOCH {}/{} TRAIN loss/acc : {:.3f}/{:.2f}%'
-                    .format(epoch, num_epochs-1, self.train_loss_history[-1], self.train_acc_history[-1] * 100))
+                    .format(epoch, num_epochs-1, self.train_loss_history[-1]*1000, self.train_acc_history[-1] * 100))
             print('EPOCH {}/{} VAL loss/acc : {:.3f}/{:.2f}%'
-                    .format(epoch, num_epochs - 1, self.val_loss_history[-1], self.val_acc_history[-1] * 100))
+                    .format(epoch, num_epochs - 1, self.val_loss_history[-1]*1000, self.val_acc_history[-1] * 100))
             print('-' * 10)
 
-            # storing the best model:
+            # storing and saveing the best model:
             if self.val_acc_history[-1] >= best_val_acc:
                 best_model_state_dict = copy.deepcopy(model.state_dict())
+                # saving the best model's state dictionary:
+                if saving_path is not None:
+                    try: 
+                        torch.save(model.state_dict(), saving_path)
+                    except:
+                        print('unable to save model to ' + saving_path)
+
                 best_val_acc = self.val_acc_history[-1]
 
         print('FINISH.')
@@ -171,8 +190,7 @@ class NN_Solver(object):
         print('Training complete in {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
 
-        # return the best model's state dictionary:
-
-        del val_loss, val_acc
         torch.cuda.empty_cache()
-        return best_model_state_dict
+
+        # loading the best acquired state dictionary to the model:
+        model.load_state_dict(best_model_state_dict)
