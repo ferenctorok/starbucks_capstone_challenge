@@ -1,0 +1,69 @@
+\documentclass[11pt,oneside,a4paper]{report}
+%for hungarian letters
+\usepackage[utf8]{inputenc}
+
+\renewcommand*\thesection{\arabic{section}}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\usepackage{algorithm}
+%for pseudo codes:
+\usepackage{algpseudocode}
+
+%for hyperreferences
+\usepackage{hyperref}
+%--------------------------------------------------------------------------------------
+%	Setup hyperref package
+%--------------------------------------------------------------------------------------
+\hypersetup{
+	bookmarks=true,            % show bookmarks bar?
+	unicode=false,             % non-Latin characters in Acrobats bookmarks
+	pdfproducer={Producer},    % producer of the document
+	pdfkeywords={keywords},    % list of keywords
+	pdfnewwindow=true,         % links in new window
+	colorlinks=true,           % false: boxed links; true: colored links
+	linkcolor=black,           % color of internal links
+	citecolor=black,           % color of links to bibliography
+	filecolor=black,           % color of file links
+	urlcolor=black             % color of external links
+}
+
+%for being able to use more than 10 columns in bmatrix.
+\setcounter{MaxMatrixCols}{20}
+
+%setting margin size:
+\usepackage{geometry}
+\geometry{top=1.5in}
+\geometry{margin=1.5in}
+
+\setlength{\parindent}{0pt} % nicer spacing, english style
+\setlength{\parskip}{8pt plus 3pt minus 3pt} % nicer spacing, english style
+
+\usepackage{enumitem}	%for being able to set spacing of lists
+\setlist{nosep}
+
+\title{Starbucks's Capstone Challenge \\ 
+		Report}
+\author{Ferenc Török \\ \href{mailto:ferike.trk@gmail.com}{ferike.trk@gmail.com} \\
+						\href{https://github.com/ferenctorok/starbucks_capstone_challenge}
+						{github.com/ferenctorok/starbucks\_capstone\_challenge}} 
+					
+\renewcommand*\contentsname{Table of Contents} 	%Renaming the table of contents. Default: Contents
+
+\begin{document}
+	
+	\maketitle
+	
+	\tableofcontents
+	
+	\pagebreak
+	
+	\include{Definition}
+	\include{Analysis}
+	\include{Methodology}
+	\include{Results}
+	
+	
+	
+\end{document}
