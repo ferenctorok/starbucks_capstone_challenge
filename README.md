@@ -1,6 +1,6 @@
 ### Udacity Machine Learning Engineer Nanodegree Program ###
 
-# Starbuck's Capstone Project #
+# Starbucks's Capstone Project #
 
 This is the final project of the [Udacity Machine Learning Engineer Nanodegree Program](https://www.udacity.com/coursemachine-learning-engineer-nanodegree--nd009t).
 
