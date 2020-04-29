@@ -1,8 +1,8 @@
-\section{Definition}
+\section{Definition} \label{sec1}
 
 This project was carried out as a part of Udacity's Machine Learning Engineer Nanodegree.
 
-\subsection{Project Overview}
+\subsection{Project Overview} \label{sec1.1}
 
 The Starbucks Corporation is an American multinational coffeehouse chain. The company was founded in 1972 and today operates in more than 30000 locations in 77 countries worldwide. As other companies, Starbucks keeps in touch with its costumers mostly via its marketing system. It sends promotions, advertisements to the costumers via various channels. With the amount of data gathered in recent times and with the advance of Machine Learning techniques and Artificial Intelligence a new era in advertising raises. This is the era of personal advertisement where based on data about costumers, one is able to send relevant and only the most relevant promotions and advertisement to them. This stimulates purchasing and hence the company is able to gain larger profit.
 
@@ -10,9 +10,9 @@ The dataset given is a "toy" dataset that mimics Starbucks's own gathered during
 
 Of course in real life, Starbucks has a wide variety of products to offer, however for the sake of simplicity the simulation includes only one product. There are however 10 types of promotions about this one product, such as 'BOGO' (buy-one-get-one) or simple advertisement. The dataset contains records of some basic personal data of the costumers, the transactions with time-stamped data (transactions, when did the costumer receive an offer, when did he view it etc.) and the details of the offers. Detailed explanation of the dataset can be found later.
 
-\subsection{Problem Statement}
+\subsection{Problem Statement} \label{sec1.2}
 
-Carrying out successful marketing campaigns is an absolutely not straight forward and vastly expensive task. Hence for Starbucks, and for any company, it is crucial to minimize the chance for campaigns to be unsuccessful. These days technology provides tools for marketing which if well used can increase the number of successful campaigns by allowing to target different people with different materials. This is a huge opportunity, however it poses further tasks to be solved. Namely, to identify costumer groups to target with different campaigns. Machine Learning techniques tend to play an important role in these tasks due to their capability of recognizing patterns in data. Machine Learning techniques and the vast amount of available data together provide the opportunity to carry out personal advertisement with high success rates.
+Carrying out successful marketing campaigns is an absolutely not straight forward and vastly expensive task. Hence for Starbucks, and for any company, it is crucial to minimize the chance for campaigns to be unsuccessful. These days technology provides tools for marketing which if well used can increase the number of successful campaigns by allowing to target different people with different materials. This is a huge opportunity, however it poses further tasks to be solved. For example to identify costumer groups to target with different campaigns. Machine Learning techniques tend to play an important role in these tasks due to their capability of recognizing patterns in data. Machine Learning techniques and the vast amount of available data together provide the opportunity to carry out personal advertisement with high success rates.
 
 The aim of personal advertisement is to send each costumer promotions which are the most probable to make them satisfied. Also it is important not to send them promotions which will most probably not interest them since these might even have a negative effect on the consumption. Also in some situations the people fulfill some promotions without even noticing that they existed. These are also situations to avoid since in this situation the company gave these people some discount although it was not necessary.
 
@@ -24,11 +24,13 @@ In this respect the aim of the project is to classify an offer that is given to 
 	\item Will be completed and viewed
 \end{itemize}
 
-The feature vector, based on which the model tries to classify the offer given to a person will contain several features including the personal data and its costumer history until it receives the offer.
+For being able to classify offers sent to a person, personal data and consumer history until the point of receiving the offer are going to be used. Hence one important task of the solution is to extract valuable information form the raw dataset which can be useful for representing the given costumer and his/her habits, traits.
 
 After an offer is classified into the groups above one can decide to send or not to send that particular offer to the costumer. A reasonable choice would be to send someone an offer if it falls into the category 4 and not to send otherwise. Another option could be to also send it if it falls into 3 and 4. In this case it is not sure that the costumer will fulfill the offer, however it has viewed the offer, so at least the information got through.
 
-\subsection{Metrics}
+After creating the training data and training the model we hope to achieve a prediction accuracy around 65\% - 70\%.
+
+\subsection{Metrics} \label{sec1.3}
 
 As the task is multiclass classification, accuracy is the suitable performance measure. (False positive, False negative etc. is not defined for the multiclass case.) The accuracy is going to be calculated with the usual formula:
 
