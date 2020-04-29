@@ -4,3 +4,5 @@
 *.synctex.gz
 *.out
 *.toc
+.ipynb_checkpoints/
+.vscode/
